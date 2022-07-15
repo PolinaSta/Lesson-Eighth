@@ -218,55 +218,6 @@
 
 // 1.Упорядочить по убыванию элементы каждой строки двумерного массива.
 
-int[,] CreateRandomArray(int m, int n, int min, int max)
-{
-int[,] array = new int[m, n];
-for (int i = 0; i < m; i++)
-{
-for (int j = 0; j < n; j++)
-{
-array[i, j] = new Random().Next(min, max);
-}
-}
-return array;
-}
-
-void ShowArray(int[,] array)
-{
-for (int i = 0; i < array.GetLength(0); i++)
-{
-for (int j = 0; j < array.GetLength(1); j++)
-{
-Console.Write(array[i, j] + " ");
-}
-Console.WriteLine();
-}
-}
-int [,] myArray = CreateRandomArray(4,4,1,10);
-ShowArray(myArray);
-
-// int[,] SwapArray(int[,] array)
-// {
-// int[,] ArrayNew = new int[array.GetLength(0), array.GetLength(1)];
-
-// for (int i = 0; i < array.GetLength(0); i++)
-// {
-// for (int j = 0; j < array.GetLength(1); j++)
-// {
-// ArrayNew[j, i] = array[i,j];
-// }
-// }
-// Console.WriteLine();
-// return ArrayNew;
-// }
-
-// ShowArray(SwapArray(myArray));
-
-
-
-
-
-
 // int[,] CreateRandomArray(int m, int n, int min, int max)
 // {
 //     int[,] array = new int[m, n];
@@ -327,3 +278,77 @@ ShowArray(myArray);
 // ShowArrayTwo(array, "Исходный");
 // SortArray(array);
 // ShowArrayTwo(array, "Результирующий");
+
+// 2. Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить строку с наименьшей суммой элементов.
+
+int[,] CreateRandomArrayTwo(int m, int n, int min, int max)
+{
+    int[,] arrayTwo = new int[m, n];
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            arrayTwo[i, j] = new Random().Next(min, max);
+        }
+    }
+    return arrayTwo;
+}
+
+void ShowArrayTwo(int[,] arrayTwo, string nameArray)
+{
+    Console.WriteLine($"{Environment.NewLine}{nameArray} массив:");
+    for (int i = 0; i < arrayTwo.GetLength(0); i++)
+    {
+        Console.Write($"[{i}] ");
+        for (int j = 0; j < arrayTwo.GetLength(1); j++)
+        {
+            Console.Write($"{arrayTwo[i,j]}\t");
+        }
+        Console.WriteLine();
+    }
+}
+
+int MinSumOfRows(int[,] arrayTwo)
+{
+    int minSum = int.MinValue;
+    int minIndex = int.MinValue;
+
+    int[] arrayOne = new int[arrayTwo.GetLength(0)];
+
+    for (int i = 0; i < arrayTwo.GetLength(0); i++)
+    {
+        for (int j = 0; j < arrayTwo.GetLength(1); j++)
+        {
+            arrayOne[i] += arrayTwo[i, j];
+        }
+    }
+    Console.WriteLine($"{Environment.NewLine}Сумма элементов по строкам:");
+    for (int i = 0; i < arrayOne.Length; i++)
+    {
+        Console.WriteLine($"{arrayOne[i]}\t");
+    }
+    Console.WriteLine();
+
+    for (int i = 0; i < arrayOne.Length; i++)
+    {
+        if (arrayOne[i] < minSum)
+        {
+            minSum = arrayOne[i];
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+Console.Write("Enter number of rows:  ");
+int rows= Convert.ToInt32(Console.ReadLine());
+Console.Write("Enter number of columns:  ");
+int columns = Convert.ToInt32(Console.ReadLine());
+Console.Write("Enter min number for random:  ");
+int min = Convert.ToInt32(Console.ReadLine());
+Console.Write("Enter max number for random:  ");
+int max = Convert.ToInt32(Console.ReadLine());
+
+int[,] arrayTwo = CreateRandomArrayTwo(rows, columns, min, max);
+ShowArrayTwo(arrayTwo, "Исходный");
+Console.WriteLine($"Строка с наименьшей суммой элементов имеет индекс: {MinSumOfRows(arrayTwo)}");
